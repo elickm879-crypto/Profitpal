@@ -445,7 +445,38 @@ function calculateProfit(event) {
     renderHistory();
 }
 
-function renderHistory() {
+
+function renderDailySummary() {
+    const today = new Date().toLocaleDateString();
+
+    const todayHistory = historyData.filter(item =>
+        item.date &&
+        item.date.split(",")[0] === today
+    );
+
+    let totalSales = 0;
+    let totalCosts = 0;
+    let netProfit = 0;
+
+    todayHistory.forEach(item => {
+        totalSales += item.selling * item.quantity;
+        totalCosts +=
+            item.buying * item.quantity + item.expenses;
+        netProfit += item.profit;
+    });
+
+    document.getElementById("dailyRevenue").textContent =
+        "KSh " + totalSales.toFixed(2);
+
+    document.getElementById("dailyCost").textContent =
+        "KSh " + totalCosts.toFixed(2);
+
+    document.getElementById("dailyProfit").textContent =
+        "KSh " + netProfit.toFixed(2);
+
+    document.getElementById("dailyCount").textContent =
+        todayHistory.length;
+}function renderHistory() {
     historyContainer.replaceChildren();
     emptyHistory.style.display =
         historyData.length === 0 ? "block" : "none";
