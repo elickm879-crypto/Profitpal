@@ -1,212 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ProfitPal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProfitPal - Profit Calculator</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px 14px;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #172033;
+}
+
+.container {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+header {
+    background: linear-gradient(135deg, #123c69, #087f8c);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 19px;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d6deea;
+    border-radius: 9px;
+    font-size: 16px;
+    background: #fbfdff;
+}
+
+input:focus {
+    outline: 2px solid #8bd3dd;
+    border-color: #087f8c;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 13px 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.calculate {
+    flex: 2;
+    background: #087f8c;
+    color: white;
+}
+
+.reset {
+    flex: 1;
+    background: #e5eaf1;
+    color: #172033;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.result-box {
+    background: #f3f7fb;
+    border-radius: 12px;
+    padding: 15px 10px;
+    overflow-wrap: anywhere;
+}
+
+.result-box p {
+    margin: 0 0 8px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.result-box strong {
+    font-size: 18px;
+}
+
+.profit-box {
+    background: #e8f8ef;
+}
+
+.loss-box {
+    background: #fff0f0;
+}
+
+#profitValue {
+    color: #16834a;
+}
+
+#profitValue.loss {
+    color: #d12f43;
+}
+
+#status {
+    font-weight: bold;
+    margin: 15px 0 0;
+}
+
+.history-item {
+    border: 1px solid #e1e8f0;
+    padding: 13px;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow-wrap: anywhere;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.history-item button {
+    background: #dc3545;
+    color: white;
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+.clear {
+    width: 100%;
+    background: #26374d;
+    color: white;
+    margin-top: 14px;
+}
+
+#emptyHistory {
+    color: #64748b;
+    font-size: 14px;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 15px 0;
+    font-size: 12px;
+}
+
+@media (max-width: 360px) {
+    .result-grid {
+        grid-template-columns: 1fr;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f2f4f7;
-      color: #1f2937;
-      padding: 20px 15px;
+    .buttons {
+        flex-direction: column;
     }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #6b7280;
-      margin-bottom: 25px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 18px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .calculate {
-      background: #2563eb;
-      color: white;
-    }
-
-    .reset {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .result-box {
-      display: grid;
-      gap: 12px;
-    }
-
-    .result {
-      background: #f8fafc;
-      padding: 14px;
-      border-radius: 8px;
-    }
-
-    .result-title {
-      font-size: 14px;
-      color: #6b7280;
-    }
-
-    .result-value {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 4px;
-    }
-
-    #profit {
-      font-size: 24px;
-    }
-
-    .history-item {
-      background: #f8fafc;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .delete-btn {
-      background: #dc2626;
-      color: white;
-      padding: 8px;
-      margin-top: 8px;
-      font-size: 13px;
-    }
-
-    .clear-btn {
-      background: #6b7280;
-      color: white;
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
+<div class="container">
 
-  <div class="container">
-
+<header>
     <h1>ProfitPal</h1>
-    <p class="subtitle">Calculate your profit easily</p>
+    <p>Calculate your profit easily</p>
+</header>
 
-    <div class="card">
+<section class="card">
+    <h2>Enter Your Business Details</h2>
 
-      <label for="buyingPrice">Buying Price:</label>
-      <input type="number" id="buyingPrice" placeholder="Enter buying price">
+    <form id="profitForm">
+        <label for="buyingPrice">Buying Price (KSh per item)</label>
+        <input id="buyingPrice" type="number"
+               min="0" step="any"
+               placeholder="Enter buying price" required>
 
-      <label for="sellingPrice">Selling Price:</label>
-      <input type="number" id="sellingPrice" placeholder="Enter selling price">
+        <label for="sellingPrice">Selling Price (KSh per item)</label>
+        <input id="sellingPrice" type="number"
+               min="0" step="any"
+               placeholder="Enter selling price" required>
 
-      <label for="quantity">Quantity:</label>
-      <input type="number" id="quantity" placeholder="Enter quantity">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number"
+               min="1" step="1"
+               placeholder="Enter quantity" required>
 
-      <label for="expenses">Expenses:</label>
-      <input type="number" id="expenses" placeholder="Enter expenses">
+        <label for="expenses">Other Expenses (KSh)</label>
+        <input id="expenses" type="number"
+               min="0" step="any"
+               value="0" placeholder="Enter expenses">
 
-      <button class="calculate" onclick="calculateProfit()">Calculate Profit</button>
-      <button class="reset" onclick="resetCalculator()">Reset</button>
+        <div class="buttons">
+            <button class="calculate" type="submit">
+                Calculate Profit
+            </button>
+            <button class="reset" type="reset">
+                Reset
+            </button>
+        </div>
+    </form>
+</section>
 
+<section class="card">
+    <h2>Results</h2>
+
+    <div class="result-grid">
+        <div class="result-box">
+            <p>Revenue</p>
+            <strong id="revenue">KSh 0.00</strong>
+        </div>
+
+        <div class="result-box">
+            <p>Total Cost</p>
+            <strong id="totalCost">KSh 0.00</strong>
+        </div>
+
+        <div class="result-box profit-box" id="profitBox">
+            <p id="profitLabel">Profit / Loss</p>
+            <strong id="profitValue">KSh 0.00</strong>
+        </div>
+
+        <div class="result-box">
+            <p>Profit Margin</p>
+            <strong id="margin">0.00%</strong>
+        </div>
     </div>
 
-    <div class="card">
+    <p id="status" aria-live="polite">
+        Enter your details to calculate.
+    </p>
+</section>
 
-      <h2>Results</h2>
+<section class="card">
+    <h2>Calculation History</h2>
+    <div id="history"></div>
+    <p id="emptyHistory">No calculations yet.</p>
 
-      <div class="result-box">
+    <button class="clear" id="clearHistory" type="button">
+        Clear History
+    </button>
+</section>
 
-        <div class="result">
-          <div class="result-title">Revenue</div>
-          <div class="result-value" id="revenue">0.00</div>
-        </div>
+<footer>
+    ProfitPal — Make smarter business decisions.
+</footer>
 
-        <div class="result">
-          <div class="result-title">Total Cost</div>
-          <div class="result-value" id="totalCost">0.00</div>
-        </div>
+</div>
 
-        <div class="result">
-          <div class="result-title">Profit</div>
-          <div class="result-value" id="profit">0.00</div>
-        </div>
+<script>
+const form = document.getElementById("profitForm");
 
-        <div class="result">
-          <div class="result-title">Profit Margin</div>
-          <div class="result-value" id="margin">0.00%</div>
-        </div>
+const buyingInput = document.getElementById("buyingPrice");
+const sellingInput = document.getElementById("sellingPrice");
+const quantityInput = document.getElementById("quantity");
+const expensesInput = document.getElementById("expenses");
 
-      </div>
+const revenueOutput = document.getElementById("revenue");
+const costOutput = document.getElementById("totalCost");
+const profitOutput = document.getElementById("profitValue");
+const profitLabel = document.getElementById("profitLabel");
+const profitBox = document.getElementById("profitBox");
+const marginOutput = document.getElementById("margin");
+const statusOutput = document.getElementById("status");
 
-    </div>
+const historyContainer = document.getElementById("history");
+const emptyHistory = document.getElementById("emptyHistory");
+const clearButton = document.getElementById("clearHistory");
 
-    <div class="card">
+let historyData = [];
 
-      <h2>Calculation History</h2>
+try {
+    const savedHistory = localStorage.getItem("profitpalHistory");
+    const parsedHistory = savedHistory ? JSON.parse(savedHistory) : [];
 
-      <ul id="history"></ul>
+    if (Array.isArray(parsedHistory)) {
+        historyData = parsedHistory.filter(item =>
+            item &&
+            typeof item.id === "string" &&
+            Number.isFinite(item.buying) &&
+            Number.isFinite(item.selling) &&
+            Number.isFinite(item.quantity) &&
+            Number.isFinite(item.expenses)
+        );
+    }
+} catch (error) {
+    historyData = [];
+}
 
-      <button class="clear-btn" onclick="clearHistory()">Clear History</button>
+function money(amount) {
+    return "KSh " + amount.toLocaleString("en-KE", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
 
-    </div>
+function saveHistory() {
+    try {
+        localStorage.setItem(
+            "profitpalHistory",
+            JSON.stringify(historyData)
+        );
+    } catch (error) {
+        statusOutput.textContent =
+            "Calculation works, but history could not be saved on this device.";
+    }
+}
 
-  </div>
+function calculateProfit(event) {
+    event.preventDefault();
 
-  <script>
-    function calculateProfit() {
+    const buying = Number(buyingInput.value);
+    const selling = Number(sellingInput.value);
+    const quantity = Number(quantityInput.value);
+    const expenses = expensesInput.value.trim() === ""
+        ? 0
+        : Number(expensesInput.value);
 
-      const buyingPrice = Number(document.getElementById("buyingPrice").value);
-      const sellingPrice = Number(document.getElementById("sellingPrice").value);
-      const quantity = Number(document.getElementById("quantity").value);
-      const expenses = Number(document.getElementById("expenses").value);
-
-      if (
-        buyingPrice < 0 ||
-        sellingPrice < 0 ||
-        quantity <= 0 ||
+    if (
+        buyingInput.value.trim() === "" ||
+        sellingInput.value.trim() === "" ||
+        quantityInput.value.trim() === "" ||
+        expensesInput.value.trim() === "" ||
+        !Number.isFinite(buying) ||
+        !Number.isFinite(selling) ||
+        !Number.isFinite(quantity) ||
+        !Number.isFinite(expenses) ||
+        buying < 0 ||
+        selling < 0 ||
+        quantity < 1 ||
+        !Number.isInteger(quantity) ||
         expenses < 0
-      ) {
-        alert("Please enter valid
+    ) {
+        statusOutput.textContent =
+            "Please enter valid prices, a whole-number quantity, and expenses of zero or more.";
+        return;
+    }
+
+    const revenue = selling * quantity;
+    const totalCost = (buying * quantity) + expenses;
+    const profit = revenue - totalCost;
+    const margin = revenue > 0
+        ? (profit / revenue) * 100
+        : 0;
+
+    if (
+        !Number.isFinite(revenue) ||
+        !Number.isFinite(totalCost) ||
+        !Number.isFinite(profit) ||
+        !Number.isFinite(margin)
+    ) {
+        statusOutput.textContent =
+            "These numbers are too large. Please enter smaller values.";
+        return;
+    }
+
+    revenueOutput.textContent = money(revenue);
+    costOutput.textContent = money(totalCost);
+    profitOutput.textContent = money(Math.abs(profit));
+    marginOutput.textContent = margin.toFixed(2) + "%";
+
+    if (profit > 0) {
+        profitLabel.textContent = "Profit";
+        profitBox.classList.add("profit-box");
+        profitBox.classList.remove("loss-box");
+        profitOutput.classList.remove("loss");
+        statusOutput.textContent = "Great! Your business made a profit.";
+    } else if (profit < 0) {
+        profitLabel.textContent = "Loss";
+        profitBox.classList.remove("profit-box");
+        profitBox.classList.add("loss-box");
+        profitOutput.classList.add("loss");
+        statusOutput.textContent = "You made a loss on this calculation.";
+    } else {
+        profitLabel.textContent = "Break-even";
+        profitBox.classList.remove("loss-box");
+        profitBox.classList.add("profit-box");
+        profitOutput.classList.remove("loss");
+        statusOutput.textContent = "Your revenue equals your total cost.";
+    }
+
+    const record = {
+        id: Date.now().toString() + "-" +
+            Math.random().toString(36).slice(2),
+        buying: buying,
+        selling: selling,
+        quantity: quantity,
+        expenses: expenses,
+        revenue: revenue,
+        totalCost: totalCost,
+        profit: profit,
+        margin: margin,
+        date: new Date().toLocaleString()
+    };
+
+    historyData.unshift(record);
+    historyData = historyData.slice(0, 100);
+
+    saveHistory();
+    renderHistory();
+}
+
+function renderHistory() {
+    historyContainer.replaceChildren();
+    emptyHistory.style.display =
+        historyData.length === 0 ? "block" : "none";
+
+    historyData.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "history-item";
+
+        const details = document.createElement("div");
+        details.textContent =
+            "Buying: " + money(item.buying) +
+            " | Selling: " + money(item.selling) +
+            " | Qty: " + item.quantity +
+            " | Expenses: " + money(item.expenses);
+
+        const outcome = document.createElement("div");
+        outcome.textContent =
+            (item.profit > 0 ? "PROFIT: " :
+             item.profit < 0 ? "LOSS: -" : "BREAK-EVEN: ") +
+            money(Math.abs(item.profit));
+
+        outcome.style.fontWeight = "bold";
+        outcome.style.color = item.profit < 0
+            ? "#d12f43"
+            : "#16834a";
+
+        const date = document.createElement("small");
+        date.textContent = item.date;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "Delete";
+
+        deleteButton.addEventListener("click", function() {
+            historyData = historyData.filter(
+                record => record.id !== item.id
+            );
+            saveHistory();
+            renderHistory();
+        });
+
+        card.append(details, outcome, date,
+                    document.createElement("br"), deleteButton);
+
+        historyContainer.appendChild(card);
+    });
+}
+
+form.addEventListener("submit", calculateProfit);
+
+form.addEventListener("reset", function() {
+    setTimeout(function() {
+        statusOutput.textContent =
+            "Enter your details to calculate.";
+    }, 0);
+});
+
+clearButton.addEventListener("click", function() {
+    if (historyData.length === 0) {
+        statusOutput.textContent = "History is already empty.";
+        return;
+    }
+
+    historyData = [];
+    saveHistory();
+    renderHistory();
+
+    statusOutput.textContent = "Calculation history cleared.";
+});
+
+renderHistory();
+</script>
+
+</body>
+</html>
