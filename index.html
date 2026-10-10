@@ -279,6 +279,7 @@ footer {
 </section>
     <h2>Calculation History</h2>
     <button onclick="exportTXT()">Export TXT</button>
+     <button onclick="exportPDF()">Export PDF</button>
     <div id="history"></div>
     <p id="emptyHistory">No calculations yet.</p>
 
@@ -558,6 +559,14 @@ const text = historyData.map(item => JSON.stringify(item)).join("\n");
     a.download = "ProfitPal-History.txt";
     a.click();
     URL.revokeObjectURL(url);
+}
+function exportPDF() {
+const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+        const content = historyData.map(item => JSON.stringify(item)).join("<br>");
+        printWindow.document.write("<html><head><title>ProfitPal History</title></head><body><h1>ProfitPal History</h1>" + content + "</body></html>");
+        printWindow.document.close();
+        printWindow.print();
 }
 </script>
 
