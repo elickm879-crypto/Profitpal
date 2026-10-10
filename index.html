@@ -548,6 +548,16 @@ clearButton.addEventListener("click", function() {
 });
 
 renderHistory();
+function exportTXT() {
+const text = historyData.map(item => JSON.stringify(item)).join("\n");
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ProfitPal-History.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+}
 </script>
 
 </body>
