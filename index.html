@@ -561,12 +561,79 @@ const text = historyData.map(item => JSON.stringify(item)).join("\n");
     URL.revokeObjectURL(url);
 }
 function exportPDF() {
-const printWindow = window.open("", "_blank");
+    const printWindow = window.open("", "_blank");
     if (!printWindow) return;
-        const content = historyData.map(item => JSON.stringify(item)).join("<br>");
-        printWindow.document.write("<html><head><title>ProfitPal History</title></head><body><h1>ProfitPal History</h1>" + content + "</body></html>");
-        printWindow.document.close();
-        printWindow.print();
+    const content = historyData.map(item => `
+        <tr>
+            <td>${item.buyingPrice}</td>
+            <td>${item.sellingPrice}</td>
+            <td>${item.quantity}</td>
+            <td>${item.expenses}</td>
+        </tr>
+    `).join("");    printWindow.document.write(`
+        <html>
+        <head>
+            <title>ProfitPal Business Report</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 30px;
+                    color: #222;
+                }
+                h1 {
+                    text-align: center;
+                    color: #1677d2;
+                }
+                p {
+                    text-align: center;
+                    color: #666;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 25px;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    text-align: center;
+                }
+                th {
+                    background: #1677d2;
+                    color: white;
+                }
+                tr:nth-child(even) {
+                    background: #f2f6fa;
+                }
+                @media print {
+                    tr {
+                        page-break-inside: avoid;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>ProfitPal</h1>
+            <p>Business Calculation Report</p>
+            <h2>Calculation History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Buying Price</th>
+                        <th>Selling Price</th>
+                        <th>Quantity</th>
+                        <th>Expenses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${content}
+                </tbody>
+            </table>
+        </body>
+        </html>
+    `);    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
 }
 </script>
 
