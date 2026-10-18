@@ -643,6 +643,13 @@ const text = historyData.map(item => JSON.stringify(item)).join("\n");
         <body>
             <h1>ProfitPal</h1>
             <p>Business Performance Report</p>
+                        <div class="summary">
+                <h3>Business Summary</h3>
+                <p>Total Revenue: ${moneyPDF(totalRevenue)}</p>
+                <p>Total Cost: ${moneyPDF(totalCost)}</p>
+                <p>Net Profit: ${moneyPDF(totalProfit)}</p>
+                <p>Total Calculations: ${historyData.length}</p>
+            </div>
 </script
 
 </body>
