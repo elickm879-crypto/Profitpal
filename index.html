@@ -596,7 +596,54 @@ const text = historyData.map(item => JSON.stringify(item)).join("\n");
             <td>${Number(item.margin || 0).toFixed(2)}%</td>
         </tr>
     `).join("");
-</script>
+            printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>ProfitPal Business Report</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 25px;
+                    color: #222;
+                }
+
+                h1 {
+                    color: #087f5b;
+                    text-align: center;
+                }
+
+                p {
+                    text-align: center;
+                    color: #666;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 10px;
+                }
+
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 7px;
+                    text-align: center;
+                }
+
+                th {
+                    background: #087f5b;
+                    color: white;
+                }
+
+                @media print {
+                    body { padding: 5px; }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>ProfitPal</h1>
+            <p>Business Performance Report</p>
+</script
 
 </body>
 </html>
