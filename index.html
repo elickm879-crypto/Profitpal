@@ -650,6 +650,43 @@ const text = historyData.map(item => JSON.stringify(item)).join("\n");
                 <p>Net Profit: ${moneyPDF(totalProfit)}</p>
                 <p>Total Calculations: ${historyData.length}</p>
             </div>
+            
+            <h3>Calculation History</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Buying</th>
+                        <th>Selling</th>
+                        <th>Qty</th>
+                        <th>Expenses</th>
+                        <th>Revenue</th>
+                        <th>Total Cost</th>
+                        <th>Profit/Loss</th>
+                        <th>Margin</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${content}
+                </tbody>
+            </table>
+
+            <p class="footer">
+                ProfitPal — Make smarter business decisions.
+            </p>
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+
+    printWindow.onload = function () {
+        printWindow.print();
+    };
+}
+
 </script
 
 </body>
