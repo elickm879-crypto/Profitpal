@@ -752,6 +752,33 @@ const text = historyData.map(item => JSON.stringify(item)).join("\n");
     };
 }
 
+function checkPasswordStrength() {
+    const password = document.getElementById("authPassword").value;
+
+    const rules = {
+        ruleLength: password.length >= 8 && password.length <= 64,
+        ruleUpper: /[A-Z]/.test(password),
+        ruleLower: /[a-z]/.test(password),
+        ruleNumber: /[0-9]/.test(password),
+        ruleSpecial: /[^A-Za-z0-9]/.test(password)
+    };
+
+    const labels = {
+        ruleLength: "8–64 characters",
+        ruleUpper: "One uppercase letter (A-Z)",
+        ruleLower: "One lowercase letter (a-z)",
+        ruleNumber: "One number (0-9)",
+        ruleSpecial: "One special character"
+    };
+
+    for (const id in rules) {
+        document.getElementById(id).textContent =
+            (rules[id] ? "✅ " : "❌ ") + labels[id];
+    }
+
+    return Object.values(rules).every(Boolean);
+}
+
 </script>
 
 </body>
