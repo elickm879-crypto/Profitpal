@@ -779,7 +779,25 @@ function checkPasswordStrength() {
 
     return Object.values(rules).every(Boolean);
 }
+function suggestPassword() {
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
 
+    let password = "";
+
+    for (let i = 0; i < 16; i++) {
+        password += chars[
+            Math.floor(Math.random() * chars.length)
+        ];
+    }
+
+    document.getElementById("authPassword").value = password;
+
+    document.getElementById("suggestedPassword").textContent =
+        "Suggested password: " + password;
+
+    checkPasswordStrength();
+    }
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://pahdjkoeidkyizjrkvmw.supabase.co";
