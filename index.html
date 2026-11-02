@@ -842,6 +842,67 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
+    async function signUp() {
+    const email = document.getElementById("authEmail").value.trim();
+    const password = document.getElementById("authPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const message = document.getElementById("authMessage");
+
+    if (!email || !password || !confirmPassword) {
+        message.textContent = "Please fill in all fields.";
+        return;
+    }
+
+    if (!checkPasswordStrength()) {
+        message.textContent = "Password does not meet all requirements.";
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        message.textContent = "Passwords do not match.";
+        return;
+    }
+
+    message.textContent = "Creating your account...";
+
+    const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        message.textContent = error.message;
+        return;
+    }
+
+    message.textContent =
+        "Account created! Check your email to confirm your account.";
+}
+
+async function login() {
+    const email = document.getElementById("authEmail").value.trim();
+    const password = document.getElementById("authPassword").value;
+    const message = document.getElementById("authMessage");
+
+    if (!email || !password) {
+        message.textContent = "Enter your email and password.";
+        return;
+    }
+
+    message.textContent = "Logging in...";
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        message.textContent = error.message;
+        return;
+    }
+
+    message.textContent = "Login successful!";
+}
 </script>
 
 </body>
