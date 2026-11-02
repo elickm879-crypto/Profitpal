@@ -815,6 +815,15 @@ function suggestPassword() {
             Math.floor(Math.random() * chars.length)
         ];
     }
+
+    document.getElementById("authPassword").value = password;
+
+    document.getElementById("suggestedPassword").textContent =
+        "Suggested password: " + password;
+
+    checkPasswordStrength();
+}
+
 function togglePassword(id) {
     const input = document.getElementById(id);
 
@@ -823,14 +832,7 @@ function togglePassword(id) {
     } else {
         input.type = "password";
     }
-    }
-    document.getElementById("authPassword").value = password;
-
-    document.getElementById("suggestedPassword").textContent =
-        "Suggested password: " + password;
-
-    checkPasswordStrength();
-    }
+            }
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://pahdjkoeidkyizjrkvmw.supabase.co";
