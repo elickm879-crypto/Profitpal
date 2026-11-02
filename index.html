@@ -234,12 +234,32 @@ footer {
     <input id="authEmail" type="email"
         placeholder="Enter your email">
      
-<input id="authPassword" type="password"
-    placeholder="Create a strong password"
-    minlength="8"
-    maxlength="64"
-    autocomplete="new-password"
-    oninput="checkPasswordStrength()">
+<div class="passwordBox">
+    <input id="authPassword" type="password"
+        placeholder="Create a strong password"
+        minlength="8"
+        maxlength="64"
+        autocomplete="new-password"
+        oninput="checkPasswordStrength()">
+
+    <button type="button"
+        onclick="togglePassword('authPassword')">
+        👁️
+    </button>
+</div>
+
+<div class="passwordBox">
+    <input id="confirmPassword" type="password"
+        placeholder="Confirm your password"
+        minlength="8"
+        maxlength="64"
+        autocomplete="new-password">
+
+    <button type="button"
+        onclick="togglePassword('confirmPassword')">
+        👁️
+    </button>
+</div>
 <div id="passwordRules">
     <p>Password must have:</p>
     <p id="ruleLength">❌ 8–64 characters</p>
