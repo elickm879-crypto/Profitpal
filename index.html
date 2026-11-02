@@ -240,7 +240,6 @@ footer {
     maxlength="64"
     autocomplete="new-password"
     oninput="checkPasswordStrength()">
-
 <div id="passwordRules">
     <p>Password must have:</p>
     <p id="ruleLength">❌ 8–64 characters</p>
@@ -250,14 +249,20 @@ footer {
     <p id="ruleSpecial">❌ One special character (!@#$%)</p>
 </div>
 
+<button type="button" onclick="suggestPassword()">
+    Suggest a strong password
+</button>
 
-    <button type="button" onclick="signUp()">
-        Sign Up
-    </button>
+<p id="suggestedPassword"></p>
 
-    <button type="button" onclick="login()">
-        Login
-    </button>
+<button type="button" onclick="signUp()">
+    Sign Up
+</button>
+
+<button type="button" onclick="login()">
+    Login
+</button>
+
 
     <p id="authMessage"></p>
 </div>
